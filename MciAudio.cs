@@ -69,7 +69,7 @@ namespace Polyriser {
 
 		string _alias;
 		int _deviceID;
-		bool _opened;
+		bool _opened, _playing;
 		public bool Repeat {get; set;}
 		MciNotifyWindow _notifyWindow;
 
@@ -87,6 +87,7 @@ namespace Polyriser {
 			SendCommand("close " + _alias + " wait");
 			_notifyWindow.DestroyHandle();
 			_opened = false;
+			_playing = false;
 		}
 
 		public void Open(string fileName) {
@@ -112,6 +113,7 @@ namespace Polyriser {
 
 		public void Play() {
 			SendCommand("play " + _alias + " notify");
+			_playing = true;
 		}
 
 		public void Pause() {
@@ -120,6 +122,7 @@ namespace Polyriser {
 
 		public void Stop() {
 			if(_opened) {
+				_playing = false;
 				SendCommand("stop " + _alias + " wait");
 				SeekToStart();
 			}
@@ -147,10 +150,9 @@ namespace Polyriser {
 			if(wParam != MCI_NOTIFY_SUCCESSFUL)
 				return;
 
-			if(Repeat) {
-				SeekToStart();
+			SeekToStart();
+			if(Repeat && _playing)
 				Play();
-			}
 		}
 
 
