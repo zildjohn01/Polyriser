@@ -232,6 +232,19 @@ namespace Polyriser {
 		}
 
 
+		private void lnkHistory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+			var info = new ProcessStartInfo();
+			info.FileName = Path.Combine(App.StoragePath, Strings.LogFile);
+			info.UseShellExecute = true;
+			try {
+				Process.Start(info);
+			} catch {
+				MessageBox.Show(this, "Error opening the log file:" +
+					Environment.NewLine + Environment.NewLine + info.FileName,
+					this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			}
+		}
+
 		private void cmdSetupBrowseAppData_Click(object sender, EventArgs e) {
 			var info = new ProcessStartInfo();
 			info.FileName = App.StoragePath;

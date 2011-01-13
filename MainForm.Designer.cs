@@ -29,7 +29,6 @@
 			this.lnkMainCoreLen = new System.Windows.Forms.LinkLabel();
 			this.lnkMainNapLen = new System.Windows.Forms.LinkLabel();
 			this.txtHistory = new System.Windows.Forms.TextBox();
-			this.lblHistory = new System.Windows.Forms.Label();
 			this.lblMainForce = new System.Windows.Forms.Label();
 			this.cmdMainTestOptions = new System.Windows.Forms.Button();
 			this.cboMainTestMethod = new System.Windows.Forms.ComboBox();
@@ -72,6 +71,7 @@
 			this.mnuTray = new System.Windows.Forms.ContextMenu();
 			this.mnuTrayShow = new System.Windows.Forms.MenuItem();
 			this.mnuTrayExit = new System.Windows.Forms.MenuItem();
+			this.lnkHistory = new System.Windows.Forms.LinkLabel();
 			this.Tabs.SuspendLayout();
 			this.tabMain.SuspendLayout();
 			this.tabSetup.SuspendLayout();
@@ -92,9 +92,9 @@
 			// tabMain
 			// 
 			this.tabMain.Controls.Add(this.lnkMainCoreLen);
+			this.tabMain.Controls.Add(this.lnkHistory);
 			this.tabMain.Controls.Add(this.lnkMainNapLen);
 			this.tabMain.Controls.Add(this.txtHistory);
-			this.tabMain.Controls.Add(this.lblHistory);
 			this.tabMain.Controls.Add(this.lblMainForce);
 			this.tabMain.Controls.Add(this.cmdMainTestOptions);
 			this.tabMain.Controls.Add(this.cboMainTestMethod);
@@ -138,15 +138,6 @@
 			this.txtHistory.ReadOnly = true;
 			this.txtHistory.Size = new System.Drawing.Size(312, 104);
 			this.txtHistory.TabIndex = 9;
-			// 
-			// lblHistory
-			// 
-			this.lblHistory.AutoSize = true;
-			this.lblHistory.Location = new System.Drawing.Point(6, 95);
-			this.lblHistory.Name = "lblHistory";
-			this.lblHistory.Size = new System.Drawing.Size(53, 16);
-			this.lblHistory.TabIndex = 8;
-			this.lblHistory.Text = "History:";
 			// 
 			// lblMainForce
 			// 
@@ -526,6 +517,18 @@
 			this.mnuTrayExit.Text = "E&xit";
 			this.mnuTrayExit.Click += new System.EventHandler(this.mnuTrayExit_Click);
 			// 
+			// lnkHistory
+			// 
+			this.lnkHistory.AutoSize = true;
+			this.lnkHistory.Location = new System.Drawing.Point(6, 95);
+			this.lnkHistory.Name = "lnkHistory";
+			this.lnkHistory.Size = new System.Drawing.Size(53, 16);
+			this.lnkHistory.TabIndex = 10;
+			this.lnkHistory.TabStop = true;
+			this.lnkHistory.Text = "History:";
+			this.lnkHistory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lnkHistory.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkHistory_LinkClicked);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -570,7 +573,6 @@
 		private System.Windows.Forms.Label lblSetupNapCooldown;
 		private System.Windows.Forms.Label lblSetupNapLen;
 		private System.Windows.Forms.TextBox txtHistory;
-		private System.Windows.Forms.Label lblHistory;
 		private System.Windows.Forms.Label lblMainForce;
 		private System.Windows.Forms.Button cmdMainTestOptions;
 		private System.Windows.Forms.ComboBox cboMainTestMethod;
@@ -600,6 +602,7 @@
 		private System.Windows.Forms.ContextMenu mnuTray;
 		private System.Windows.Forms.MenuItem mnuTrayShow;
 		private System.Windows.Forms.MenuItem mnuTrayExit;
+		private System.Windows.Forms.LinkLabel lnkHistory;
 	}
 }
 
