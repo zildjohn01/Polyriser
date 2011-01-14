@@ -7,9 +7,13 @@ using System.Threading;
 using System.Windows.Forms;
 
 namespace Polyriser {
+	public delegate void DelayedAction();
+
+
 	static class App {
 		static Engine _engine;
 		public static Settings Settings {get; private set;}
+
 
 		[STAThread]
 		static void Main() {

@@ -53,8 +53,6 @@ namespace Polyriser {
 		}
 
 
-		public delegate void DelayedAction();
-
 		public static Countdown Queue(TimeSpan delay, DelayedAction action) {
 			var counter = new Countdown();
 			counter.Elapsed += (object sender, EventArgs e) => action();

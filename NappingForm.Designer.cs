@@ -57,7 +57,7 @@
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "NappingForm";
-			this.Text = "NappingForm";
+			this.Text = "Meanwhile...";
 			this.TopMost = true;
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.NappingForm_FormClosing);
 			this.ResumeLayout(false);
