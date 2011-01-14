@@ -94,6 +94,7 @@ namespace Polyriser {
 				_desiredResponse = (num1 + num2 + num3 - num4).ToString();
 				break;
 			case TestMethod.VitalTest:
+				txtPrompt.Text = (string)_data;
 				_engine.RaiseEvent(EngineEvent.SoundVital);
 				_vitalTimer.Start(new TimeSpan(0, 0, Engine.VitalWaitSeconds));
 				break;

@@ -154,7 +154,7 @@ namespace Polyriser {
 				break;
 
 			case EngineEvent.VitalTest:
-				new TestForm(_engine).DoTest(this, TestMethod.VitalTest, null);
+				new TestForm(_engine).DoTest(this, TestMethod.VitalTest, "You still there?");
 				break;
 
 			case EngineEvent.CooldownBegin:
