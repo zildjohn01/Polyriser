@@ -70,6 +70,16 @@ namespace Polyriser {
 				RaiseEvent(EngineEvent.NapDone);
 		}
 
+		public void EnableVitalChecks(bool enabled) {
+			App.Settings.VitalEnabled = enabled;
+			App.Settings.SaveToFile();
+
+			if(enabled)
+				_vitalTimer.Start(App.Settings.VitalPeriod);
+			else
+				_vitalTimer.Stop();
+		}
+
 
 		public void LoadSettingsFailed(string text) {
 			RaiseEvent(EngineEvent.LoadSettingsFailed, text);

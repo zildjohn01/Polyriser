@@ -67,6 +67,13 @@ namespace Polyriser.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Info16 {
+            get {
+                object obj = ResourceManager.GetObject("Info16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Icon Open {
             get {
                 object obj = ResourceManager.GetObject("Open", resourceCulture);

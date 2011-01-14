@@ -1,4 +1,4 @@
-﻿namespace Polyriser {
+namespace Polyriser {
 	partial class MainForm {
 		/// <summary>
 		/// Required designer variable.
@@ -26,7 +26,10 @@
 			this.components = new System.ComponentModel.Container();
 			this.Tabs = new System.Windows.Forms.TabControl();
 			this.tabMain = new System.Windows.Forms.TabPage();
+			this.cmdVitalInfo = new Polyriser.MouseOnlyButton();
+			this.chkVitalTests = new System.Windows.Forms.CheckBox();
 			this.lnkMainCoreLen = new System.Windows.Forms.LinkLabel();
+			this.lnkHistory = new System.Windows.Forms.LinkLabel();
 			this.lnkMainNapLen = new System.Windows.Forms.LinkLabel();
 			this.txtHistory = new System.Windows.Forms.TextBox();
 			this.lblMainForce = new System.Windows.Forms.Label();
@@ -71,7 +74,6 @@
 			this.mnuTray = new System.Windows.Forms.ContextMenu();
 			this.mnuTrayShow = new System.Windows.Forms.MenuItem();
 			this.mnuTrayExit = new System.Windows.Forms.MenuItem();
-			this.lnkHistory = new System.Windows.Forms.LinkLabel();
 			this.Tabs.SuspendLayout();
 			this.tabMain.SuspendLayout();
 			this.tabSetup.SuspendLayout();
@@ -84,13 +86,15 @@
 			this.Tabs.Location = new System.Drawing.Point(12, 12);
 			this.Tabs.Name = "Tabs";
 			this.Tabs.SelectedIndex = 0;
-			this.Tabs.Size = new System.Drawing.Size(332, 253);
+			this.Tabs.Size = new System.Drawing.Size(332, 273);
 			this.Tabs.TabIndex = 0;
 			this.Tabs.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.Tabs_Selecting);
 			this.Tabs.Deselecting += new System.Windows.Forms.TabControlCancelEventHandler(this.Tabs_Deselecting);
 			// 
 			// tabMain
 			// 
+			this.tabMain.Controls.Add(this.cmdVitalInfo);
+			this.tabMain.Controls.Add(this.chkVitalTests);
 			this.tabMain.Controls.Add(this.lnkMainCoreLen);
 			this.tabMain.Controls.Add(this.lnkHistory);
 			this.tabMain.Controls.Add(this.lnkMainNapLen);
@@ -107,10 +111,31 @@
 			this.tabMain.Location = new System.Drawing.Point(4, 25);
 			this.tabMain.Name = "tabMain";
 			this.tabMain.Padding = new System.Windows.Forms.Padding(3);
-			this.tabMain.Size = new System.Drawing.Size(324, 224);
+			this.tabMain.Size = new System.Drawing.Size(324, 244);
 			this.tabMain.TabIndex = 0;
 			this.tabMain.Text = "Dashboard";
 			this.tabMain.UseVisualStyleBackColor = true;
+			// 
+			// cmdVitalInfo
+			// 
+			this.cmdVitalInfo.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+			this.cmdVitalInfo.Image = global::Polyriser.Properties.Resources.Info16;
+			this.cmdVitalInfo.Location = new System.Drawing.Point(232, 90);
+			this.cmdVitalInfo.Name = "cmdVitalInfo";
+			this.cmdVitalInfo.Size = new System.Drawing.Size(26, 26);
+			this.cmdVitalInfo.TabIndex = 13;
+			this.cmdVitalInfo.Click += new System.EventHandler(this.cmdVitalInfo_Click);
+			// 
+			// chkVitalTests
+			// 
+			this.chkVitalTests.AutoSize = true;
+			this.chkVitalTests.FlatStyle = System.Windows.Forms.FlatStyle.System;
+			this.chkVitalTests.Location = new System.Drawing.Point(9, 92);
+			this.chkVitalTests.Name = "chkVitalTests";
+			this.chkVitalTests.Size = new System.Drawing.Size(232, 21);
+			this.chkVitalTests.TabIndex = 12;
+			this.chkVitalTests.Text = "Make sure I\'m awake periodically";
+			this.chkVitalTests.CheckedChanged += new System.EventHandler(this.chkVitalTests_CheckedChanged);
 			// 
 			// lnkMainCoreLen
 			// 
@@ -120,6 +145,18 @@
 			this.lnkMainCoreLen.TabIndex = 11;
 			this.lnkMainCoreLen.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lnkMainCoreLen.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkMainCoreLen_LinkClicked);
+			// 
+			// lnkHistory
+			// 
+			this.lnkHistory.AutoSize = true;
+			this.lnkHistory.Location = new System.Drawing.Point(3, 115);
+			this.lnkHistory.Name = "lnkHistory";
+			this.lnkHistory.Size = new System.Drawing.Size(53, 16);
+			this.lnkHistory.TabIndex = 10;
+			this.lnkHistory.TabStop = true;
+			this.lnkHistory.Text = "History:";
+			this.lnkHistory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lnkHistory.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkHistory_LinkClicked);
 			// 
 			// lnkMainNapLen
 			// 
@@ -132,7 +169,7 @@
 			// 
 			// txtHistory
 			// 
-			this.txtHistory.Location = new System.Drawing.Point(6, 114);
+			this.txtHistory.Location = new System.Drawing.Point(6, 134);
 			this.txtHistory.Multiline = true;
 			this.txtHistory.Name = "txtHistory";
 			this.txtHistory.ReadOnly = true;
@@ -250,14 +287,14 @@
 			this.tabSetup.Location = new System.Drawing.Point(4, 25);
 			this.tabSetup.Name = "tabSetup";
 			this.tabSetup.Padding = new System.Windows.Forms.Padding(3);
-			this.tabSetup.Size = new System.Drawing.Size(324, 224);
+			this.tabSetup.Size = new System.Drawing.Size(324, 244);
 			this.tabSetup.TabIndex = 1;
 			this.tabSetup.Text = "Setup";
 			this.tabSetup.UseVisualStyleBackColor = true;
 			// 
 			// txtSoundFadeInLen
 			// 
-			this.txtSoundFadeInLen.Location = new System.Drawing.Point(290, 112);
+			this.txtSoundFadeInLen.Location = new System.Drawing.Point(290, 120);
 			this.txtSoundFadeInLen.Name = "txtSoundFadeInLen";
 			this.txtSoundFadeInLen.Size = new System.Drawing.Size(28, 22);
 			this.txtSoundFadeInLen.TabIndex = 19;
@@ -265,7 +302,7 @@
 			// lblSoundFadeInLen
 			// 
 			this.lblSoundFadeInLen.AutoSize = true;
-			this.lblSoundFadeInLen.Location = new System.Drawing.Point(173, 115);
+			this.lblSoundFadeInLen.Location = new System.Drawing.Point(173, 123);
 			this.lblSoundFadeInLen.Name = "lblSoundFadeInLen";
 			this.lblSoundFadeInLen.Size = new System.Drawing.Size(111, 16);
 			this.lblSoundFadeInLen.TabIndex = 18;
@@ -274,7 +311,7 @@
 			// cmdSetupBrowseAppData
 			// 
 			this.cmdSetupBrowseAppData.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.cmdSetupBrowseAppData.Location = new System.Drawing.Point(6, 194);
+			this.cmdSetupBrowseAppData.Location = new System.Drawing.Point(6, 214);
 			this.cmdSetupBrowseAppData.Name = "cmdSetupBrowseAppData";
 			this.cmdSetupBrowseAppData.Size = new System.Drawing.Size(160, 24);
 			this.cmdSetupBrowseAppData.TabIndex = 17;
@@ -283,7 +320,7 @@
 			// 
 			// txtSoundWarningLen
 			// 
-			this.txtSoundWarningLen.Location = new System.Drawing.Point(128, 112);
+			this.txtSoundWarningLen.Location = new System.Drawing.Point(128, 120);
 			this.txtSoundWarningLen.Name = "txtSoundWarningLen";
 			this.txtSoundWarningLen.Size = new System.Drawing.Size(28, 22);
 			this.txtSoundWarningLen.TabIndex = 16;
@@ -291,7 +328,7 @@
 			// lblSoundWarningLen
 			// 
 			this.lblSoundWarningLen.AutoSize = true;
-			this.lblSoundWarningLen.Location = new System.Drawing.Point(6, 115);
+			this.lblSoundWarningLen.Location = new System.Drawing.Point(6, 123);
 			this.lblSoundWarningLen.Name = "lblSoundWarningLen";
 			this.lblSoundWarningLen.Size = new System.Drawing.Size(116, 16);
 			this.lblSoundWarningLen.TabIndex = 15;
@@ -307,7 +344,7 @@
 			this.tbrSoundAlarm.Dock = System.Windows.Forms.DockStyle.None;
 			this.tbrSoundAlarm.DropDownArrows = true;
 			this.tbrSoundAlarm.ImageList = this.imlImages;
-			this.tbrSoundAlarm.Location = new System.Drawing.Point(246, 162);
+			this.tbrSoundAlarm.Location = new System.Drawing.Point(246, 176);
 			this.tbrSoundAlarm.Name = "tbrSoundAlarm";
 			this.tbrSoundAlarm.ShowToolTips = true;
 			this.tbrSoundAlarm.Size = new System.Drawing.Size(72, 26);
@@ -348,7 +385,7 @@
 			this.tbrSoundWarning.Dock = System.Windows.Forms.DockStyle.None;
 			this.tbrSoundWarning.DropDownArrows = true;
 			this.tbrSoundWarning.ImageList = this.imlImages;
-			this.tbrSoundWarning.Location = new System.Drawing.Point(246, 84);
+			this.tbrSoundWarning.Location = new System.Drawing.Point(246, 92);
 			this.tbrSoundWarning.Name = "tbrSoundWarning";
 			this.tbrSoundWarning.ShowToolTips = true;
 			this.tbrSoundWarning.Size = new System.Drawing.Size(72, 26);
@@ -375,14 +412,14 @@
 			// 
 			// txtSoundAlarmFile
 			// 
-			this.txtSoundAlarmFile.Location = new System.Drawing.Point(6, 162);
+			this.txtSoundAlarmFile.Location = new System.Drawing.Point(6, 176);
 			this.txtSoundAlarmFile.Name = "txtSoundAlarmFile";
 			this.txtSoundAlarmFile.Size = new System.Drawing.Size(234, 22);
 			this.txtSoundAlarmFile.TabIndex = 12;
 			// 
 			// txtSoundWarningFile
 			// 
-			this.txtSoundWarningFile.Location = new System.Drawing.Point(6, 84);
+			this.txtSoundWarningFile.Location = new System.Drawing.Point(6, 92);
 			this.txtSoundWarningFile.Name = "txtSoundWarningFile";
 			this.txtSoundWarningFile.Size = new System.Drawing.Size(234, 22);
 			this.txtSoundWarningFile.TabIndex = 11;
@@ -390,7 +427,7 @@
 			// lblSoundAlarm
 			// 
 			this.lblSoundAlarm.AutoSize = true;
-			this.lblSoundAlarm.Location = new System.Drawing.Point(6, 143);
+			this.lblSoundAlarm.Location = new System.Drawing.Point(6, 157);
 			this.lblSoundAlarm.Name = "lblSoundAlarm";
 			this.lblSoundAlarm.Size = new System.Drawing.Size(86, 16);
 			this.lblSoundAlarm.TabIndex = 10;
@@ -399,7 +436,7 @@
 			// lblSoundWarning
 			// 
 			this.lblSoundWarning.AutoSize = true;
-			this.lblSoundWarning.Location = new System.Drawing.Point(6, 65);
+			this.lblSoundWarning.Location = new System.Drawing.Point(6, 73);
 			this.lblSoundWarning.Name = "lblSoundWarning";
 			this.lblSoundWarning.Size = new System.Drawing.Size(101, 16);
 			this.lblSoundWarning.TabIndex = 9;
@@ -472,7 +509,7 @@
 			// cmdExit
 			// 
 			this.cmdExit.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.cmdExit.Location = new System.Drawing.Point(248, 271);
+			this.cmdExit.Location = new System.Drawing.Point(248, 291);
 			this.cmdExit.Name = "cmdExit";
 			this.cmdExit.Size = new System.Drawing.Size(96, 32);
 			this.cmdExit.TabIndex = 1;
@@ -482,7 +519,7 @@
 			// cmdToTray
 			// 
 			this.cmdToTray.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.cmdToTray.Location = new System.Drawing.Point(146, 271);
+			this.cmdToTray.Location = new System.Drawing.Point(146, 291);
 			this.cmdToTray.Name = "cmdToTray";
 			this.cmdToTray.Size = new System.Drawing.Size(96, 32);
 			this.cmdToTray.TabIndex = 2;
@@ -491,7 +528,8 @@
 			// 
 			// cmdAbout
 			// 
-			this.cmdAbout.Location = new System.Drawing.Point(44, 271);
+			this.cmdAbout.FlatStyle = System.Windows.Forms.FlatStyle.System;
+			this.cmdAbout.Location = new System.Drawing.Point(44, 291);
 			this.cmdAbout.Name = "cmdAbout";
 			this.cmdAbout.Size = new System.Drawing.Size(96, 32);
 			this.cmdAbout.TabIndex = 3;
@@ -517,23 +555,11 @@
 			this.mnuTrayExit.Text = "E&xit";
 			this.mnuTrayExit.Click += new System.EventHandler(this.mnuTrayExit_Click);
 			// 
-			// lnkHistory
-			// 
-			this.lnkHistory.AutoSize = true;
-			this.lnkHistory.Location = new System.Drawing.Point(6, 95);
-			this.lnkHistory.Name = "lnkHistory";
-			this.lnkHistory.Size = new System.Drawing.Size(53, 16);
-			this.lnkHistory.TabIndex = 10;
-			this.lnkHistory.TabStop = true;
-			this.lnkHistory.Text = "History:";
-			this.lnkHistory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.lnkHistory.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkHistory_LinkClicked);
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-			this.ClientSize = new System.Drawing.Size(356, 315);
+			this.ClientSize = new System.Drawing.Size(356, 335);
 			this.Controls.Add(this.cmdAbout);
 			this.Controls.Add(this.cmdToTray);
 			this.Controls.Add(this.cmdExit);
@@ -603,6 +629,8 @@
 		private System.Windows.Forms.MenuItem mnuTrayShow;
 		private System.Windows.Forms.MenuItem mnuTrayExit;
 		private System.Windows.Forms.LinkLabel lnkHistory;
+		private System.Windows.Forms.CheckBox chkVitalTests;
+		private Polyriser.MouseOnlyButton cmdVitalInfo;
 	}
 }
 

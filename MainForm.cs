@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
@@ -51,6 +51,7 @@ namespace Polyriser {
 			lnkMainNapLen.Show();
 			lnkMainCoreLen.Text = App.TimeToStringHHMM(App.Settings.CoreLength);
 			lnkMainCoreLen.Show();
+			chkVitalTests.Checked = App.Settings.VitalEnabled;
 
 			txtSetupNapLen.Text = App.TimeToStringHHMM(App.Settings.NapLength);
 			txtSetupNapCooldown.Text = App.TimeToStringHHMM(App.Settings.NapCooldown);
@@ -82,6 +83,8 @@ namespace Polyriser {
 			if(!App.TryParseHHMM(txtSetupCoreCooldown.Text, out time))
 				fail = fail ?? "CoreCooldown";
 			App.Settings.CoreCooldown = time;
+
+			App.Settings.VitalEnabled = chkVitalTests.Checked;
 
 			App.Settings.WarningSoundFile = txtSoundWarningFile.Text;
 			App.Settings.AlarmSoundFile = txtSoundAlarmFile.Text;
@@ -234,6 +237,18 @@ namespace Polyriser {
 			} finally {
 				Show();
 			}
+		}
+
+
+		private void chkVitalTests_CheckedChanged(object sender, EventArgs e) {
+			_engine.EnableVitalChecks(chkVitalTests.Checked);
+		}
+
+		private void cmdVitalInfo_Click(object sender, EventArgs e) {
+			MessageBox.Show(this, "I'll ask you to click a button every so often, just to " +
+				"make sure you're still awake." + Environment.NewLine + Environment.NewLine +
+				"Make sure you uncheck this before you leave the house!",
+				this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
 
