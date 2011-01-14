@@ -8,13 +8,13 @@ namespace Polyriser {
 
 		Engine _engine;
 		bool _alarming;  // true = alarming, false = text prompt
-		Countdown _muteTimer;
+		Countdown _muteTimer, _vitalTimer;
 		Random _random;
 		bool _okToClose;
 		TestMethod _method;
 		object _data;
 		string _desiredResponse;
-		int _successes;
+		int _trials;
 
 		public TestForm(Engine engine) {
 			InitializeComponent();
@@ -27,6 +27,8 @@ namespace Polyriser {
 			_random = new Random();
 			_muteTimer = new Countdown();
 			_muteTimer.Elapsed += MuteTimer_Elapsed;
+			_vitalTimer = new Countdown();
+			_vitalTimer.Elapsed += VitalTimer_Elapsed;
 		}
 
 		public void DoTest(IWin32Window owner, TestMethod method, object data) {
@@ -56,6 +58,25 @@ namespace Polyriser {
 			_engine.RaiseEvent(EngineEvent.SoundUnmute);
 		}
 
+		void VitalTimer_Elapsed(object sender, EventArgs e) {
+			_engine.RaiseEvent(EngineEvent.SoundVitalOuch);
+
+			if(_trials == 0) {
+				_method = TestMethod.Math;
+				_engine.Invoker.Invoke((DelayedAction)MakePrompt);
+			}
+
+			if(_trials < 4) {
+				_trials += 1;
+				_vitalTimer.Start(new TimeSpan(0, 0, Engine.VitalWaitSeconds));
+			} else {
+				// Too many tries... it's probably a lost cause, so just close and give up
+				_okToClose = true;
+				_engine.RaiseEvent(EngineEvent.VitalGaveUp);
+				_engine.Invoker.Invoke((DelayedAction)Close);
+			}
+		}
+
 
 		void MakePrompt() {
 			switch(_method) {
@@ -72,6 +93,10 @@ namespace Polyriser {
 					num1.ToString(), num2.ToString(), num3.ToString(), num4.ToString());
 				_desiredResponse = (num1 + num2 + num3 - num4).ToString();
 				break;
+			case TestMethod.VitalTest:
+				_engine.RaiseEvent(EngineEvent.SoundVital);
+				_vitalTimer.Start(new TimeSpan(0, 0, Engine.VitalWaitSeconds));
+				break;
 			default:
 				App.Assert(false);
 				break;
@@ -87,26 +112,57 @@ namespace Polyriser {
 				return;
 			}
 
-			if(Essence(txtResponse.Text) != Essence(_desiredResponse)) {
-				ScrewedUp();
-				return;
-			}
-
 			switch(_method) {
 			case TestMethod.Repeat:
-				PassedTest();
-				break;
+				if(!CheckPrompt())
+					goto FailedTest;
+
+				goto PassedTest;
+
 			case TestMethod.Math:
-				_successes += 1;
-				if(_successes >= 3)
-					PassedTest();
-				else
-					MakePrompt();
+				if(!CheckPrompt())
+					goto FailedTest;
+
+				_trials += 1;
+				if(_trials >= 3)
+					goto PassedTest;
+				MakePrompt();
 				break;
+
+			case TestMethod.VitalTest:
+				if(!CheckPrompt())
+					goto FailedTest;
+
+				_vitalTimer.Stop();
+				_engine.RaiseEvent(EngineEvent.VitalConfirmed);
+				_okToClose = true;
+				Close();
+				break;
+
 			default:
 				App.Assert(false);
 				break;
 			}
+
+			return;
+
+		FailedTest:
+			ScrewedUp();
+			return;
+
+		PassedTest:
+			PassedTest();
+			return;
+
+		Continue:
+			return;
+		}
+
+
+		bool CheckPrompt() {
+			if(_desiredResponse == null)
+				return true;
+			return Essence(txtResponse.Text) == Essence(_desiredResponse);
 		}
 
 		void ScrewedUp() {

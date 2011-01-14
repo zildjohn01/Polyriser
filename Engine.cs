@@ -5,16 +5,18 @@ using System.Windows.Forms;
 namespace Polyriser {
 	sealed class Engine {
 #if DEBUG
-		const int CancelGraceSeconds = 2;
+		public const int CancelGraceSeconds = 2;
+		public const int VitalWaitSeconds = 5;
 #else
-		const int CancelGraceSeconds = 5 * 60;
+		public const int CancelGraceSeconds = 5 * 60;
+		public const int VitalWaitSeconds = 1 * 60;
 #endif
 
 		public EngineState State {get; private set;}
-		public Control Invoker {private get; set;}
+		public Control Invoker {get; set;}
 		public TimeSpan NapLength {get; private set;}
 		public TimeSpan CooldownLength {get; private set;}
-		Countdown _napTimer, _graceTimer, _warningTimer, _cooldownTimer;
+		Countdown _napTimer, _graceTimer, _warningTimer, _cooldownTimer, _vitalTimer;
 		bool _anySignsOfLife;
 
 		public event EventHandler<EngineEventArgs> Hook;
@@ -29,6 +31,8 @@ namespace Polyriser {
 			_warningTimer.Elapsed += WarningTimer_Elapsed;
 			_cooldownTimer = new Countdown();
 			_cooldownTimer.Elapsed += CooldownTimer_Elapsed;
+			_vitalTimer = new Countdown();
+			_vitalTimer.Elapsed += VitalTimer_Elapsed;
 
 			Hook += SelfHook;
 		}
@@ -104,6 +108,8 @@ namespace Polyriser {
 			case EngineEvent.Init:
 				State = EngineState.Idle;
 				RaiseEvent(EngineEvent.SoundUnmute);
+				if(App.Settings.VitalEnabled)
+					_vitalTimer.Start(App.Settings.VitalPeriod);
 				break;
 
 			case EngineEvent.Shutdown:
@@ -125,15 +131,18 @@ namespace Polyriser {
 			case EngineEvent.NapStart:
 				App.Assert(State == EngineState.Idle);
 				State = EngineState.NapStarting;
+				_vitalTimer.Stop();
 				_napTimer.Start(NapLength);
 				_graceTimer.Start(new TimeSpan(0, 0, CancelGraceSeconds));
 				break;
 
 			case EngineEvent.NapCancelled:
-				_napTimer.Stop();
-				_graceTimer.Stop();
 				App.Assert(State == EngineState.NapStarting);
 				State = EngineState.Idle;
+				_napTimer.Stop();
+				_graceTimer.Stop();
+				if(App.Settings.VitalEnabled)
+					_vitalTimer.Start(App.Settings.VitalPeriod);
 				break;
 
 			case EngineEvent.GracePeriodOver:
@@ -169,6 +178,19 @@ namespace Polyriser {
 				_warningTimer.Stop();
 				RaiseEvent(EngineEvent.SoundStopAll);
 				RaiseEvent(EngineEvent.CooldownBegin);
+				if(App.Settings.VitalEnabled)
+					_vitalTimer.Start(App.Settings.VitalInitial);
+				break;
+
+			case EngineEvent.VitalTest:
+				// This is handled in MainForm, so that the resulting dialog
+				// can be modal and owned by MainForm
+				break;
+
+			case EngineEvent.VitalConfirmed:
+			case EngineEvent.VitalGaveUp:
+				App.Assert(App.Settings.VitalEnabled);
+				_vitalTimer.Start(App.Settings.VitalPeriod);
 				break;
 
 			case EngineEvent.CooldownBegin:
@@ -216,6 +238,11 @@ namespace Polyriser {
 			App.Assert(State == EngineState.CoolingDown);
 			RaiseEvent(EngineEvent.CooldownDone);
 		}
+
+		void VitalTimer_Elapsed(object sender, EventArgs e) {
+			App.Assert(State == EngineState.CoolingDown || State == EngineState.Idle);
+			RaiseEvent(EngineEvent.VitalTest);
+		}
 	}
 
 
@@ -226,9 +253,10 @@ namespace Polyriser {
 	enum EngineEvent {
 		None, LogMessage, Init, Shutdown, LoadSettings, LoadSettingsFailed,
 		NapStart, NapCancelled, GracePeriodOver, NapElapsed, NapWarning, NapAlarm, NapDone,
+		VitalTest, VitalConfirmed, VitalGaveUp,
 		FirstSignOfLife, PostnapVerifyFail, PostnapVerifySuccess,
 		CooldownBegin, CooldownDone, TriedToNapTooSoon, TriedToExitTooSoon,
-		SoundWarning, SoundAlarm, SoundStopAll, SoundMute, SoundUnmute,
+		SoundWarning, SoundAlarm, SoundVital, SoundVitalOuch, SoundStopAll, SoundMute, SoundUnmute,
 		VerifiedWrong, VerifiedCorrect
 	}
 

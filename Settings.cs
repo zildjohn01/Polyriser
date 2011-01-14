@@ -8,6 +8,9 @@ namespace Polyriser {
 		public TimeSpan NapCooldown {get; set;}
 		public TimeSpan CoreLength {get; set;}
 		public TimeSpan CoreCooldown {get; set;}
+		public bool VitalEnabled {get; set;}
+		public TimeSpan VitalInitial {get; set;}
+		public TimeSpan VitalPeriod {get; set;}
 		public DateTime NextNapAllowed {get; set;}
 		public string WarningSoundFile {get; set;}
 		public TimeSpan WarningSoundLength {get; set;}
@@ -23,12 +26,17 @@ namespace Polyriser {
 			NapCooldown = new TimeSpan(0, 0, 6);
 			WarningSoundLength = new TimeSpan(0, 0, 4);
 			WarningSoundFadeIn = new TimeSpan(0, 0, 8);
+			VitalInitial = new TimeSpan(0, 0, 5);
+			VitalPeriod = new TimeSpan(0, 0, 10);
 #else
 			NapLength = new TimeSpan(0, 22, 0);
 			NapCooldown = new TimeSpan(0, 35, 0);
 			WarningSoundLength = new TimeSpan(0, 0, 60);
 			WarningSoundFadeIn = new TimeSpan(0, 0, 30);
+			VitalInitial = new TimeSpan(0, 5, 0);
+			VitalPeriod = new TimeSpan(0, 65, 0);
 #endif
+			VitalEnabled = false;
 			CoreLength = new TimeSpan(3, 15, 0);
 			CoreCooldown = new TimeSpan(0, 50, 0);
 			WarningSoundFile = "warning.wav";
@@ -56,6 +64,11 @@ namespace Polyriser {
 						TryGetInt(times, "core-length", (int)CoreLength.TotalSeconds));
 					CoreCooldown = new TimeSpan(0, 0,
 						TryGetInt(times, "core-cooldown", (int)CoreCooldown.TotalSeconds));
+					VitalEnabled = TryGetBool(times, "vital-enabled", VitalEnabled);
+					VitalInitial = new TimeSpan(0, 0,
+						TryGetInt(times, "vital-initial", (int)VitalInitial.TotalSeconds));
+					VitalPeriod = new TimeSpan(0, 0,
+						TryGetInt(times, "vital-period", (int)VitalPeriod.TotalSeconds));
 					DateTime dt;
 					if(DateTime.TryParse(times.GetValue("next-nap-allowed"), out dt))
 						NextNapAllowed = dt;
@@ -90,6 +103,13 @@ namespace Polyriser {
 			return ret;
 		}
 
+		bool TryGetBool(IniSection section, string key, bool def) {
+			var str = section.GetValue(key);
+			if(str == null)
+				return def;
+			return str.ToLower() == "yes";
+		}
+
 
 		public bool SaveToFile() {
 			FileStream file = null;
@@ -115,6 +135,9 @@ namespace Polyriser {
 				ini.WriteKeyValue("nap-cooldown", ((int)NapCooldown.TotalSeconds).ToString());
 				ini.WriteKeyValue("core-length", ((int)CoreLength.TotalSeconds).ToString());
 				ini.WriteKeyValue("core-cooldown", ((int)CoreCooldown.TotalSeconds).ToString());
+				ini.WriteKeyValue("vital-enabled", VitalEnabled ? "yes" : "no");
+				ini.WriteKeyValue("vital-initial", ((int)VitalInitial.TotalSeconds).ToString());
+				ini.WriteKeyValue("vital-period", ((int)VitalPeriod.TotalSeconds).ToString());
 				if(NextNapAllowed != DateTime.MinValue)
 					ini.WriteKeyValue("next-nap-allowed", NextNapAllowed.ToString("yyyy-MM-dd HH:mm:ss"));
 

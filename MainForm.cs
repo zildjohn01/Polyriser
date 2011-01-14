@@ -150,12 +150,17 @@ namespace Polyriser {
 				}
 				break;
 
+			case EngineEvent.VitalTest:
+				new TestForm(_engine).DoTest(this, TestMethod.VitalTest, null);
+				break;
+
 			case EngineEvent.CooldownBegin:
 				cmdExit.Text = Strings.ExitCoolingDown;
 				break;
 			case EngineEvent.CooldownDone:
 				cmdExit.Text = Strings.ExitIdle;
 				break;
+
 			case EngineEvent.LogMessage: {
 				var data = (LogData)e.Data;
 				txtHistory.AppendText(data.Time.ToString("HH:mm:ss "));

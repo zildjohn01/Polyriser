@@ -70,6 +70,7 @@ namespace Polyriser {
 				App.Assert(!_warning.Playing);
 				App.Assert(!_alarm.Playing);
 				break;
+
 			case EngineEvent.SoundWarning:
 				if(_engine.State == EngineState.Warning &&
 						App.Settings.WarningSoundFadeIn.Ticks != 0) {
@@ -86,6 +87,21 @@ namespace Polyriser {
 				_alarm.SeekToStart();
 				_alarm.Play();
 				break;
+			case EngineEvent.SoundVital:
+				_warning.SeekToStart();
+				_warning.Play();
+				Countdown.Queue(new TimeSpan(0, 0, 1), () => {
+					_engine.Invoker.Invoke((DelayedAction)(() => _warning.Stop()));
+				});
+				break;
+			case EngineEvent.SoundVitalOuch:
+				_alarm.SeekToStart();
+				_alarm.Play();
+				Countdown.Queue(new TimeSpan(0, 0, 1), () => {
+					_engine.Invoker.Invoke((DelayedAction)(() => _alarm.Stop()));
+				});
+				break;
+
 			case EngineEvent.SoundStopAll:
 				_warning.Stop();
 				_alarm.Stop();

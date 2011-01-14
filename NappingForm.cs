@@ -5,7 +5,10 @@ using System.Windows.Forms;
 namespace Polyriser {
 	enum TestMethod {
 		// This enum must be kept in sync with MainForm.cboMainTestMethod's list
-		None, Repeat, Math
+		None, Repeat, Math,
+
+		// These are extra modes not listed in MainForm
+		VitalTest,
 	}
 
 	sealed partial class NappingForm : Form {
