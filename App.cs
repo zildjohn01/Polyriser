@@ -163,6 +163,8 @@ namespace Polyriser {
 			var ret = string.Format("{0}.{1:D2}", ver.Major, ver.Minor);
 			if(includeBuild)
 				ret += string.Format(".{0:D4}", ver.Build);
+			if(ver.Major < 1)
+				ret += " beta";
 			return ret;
 		}
 	}

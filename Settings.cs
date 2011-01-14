@@ -34,7 +34,7 @@ namespace Polyriser {
 			WarningSoundLength = new TimeSpan(0, 0, 60);
 			WarningSoundFadeIn = new TimeSpan(0, 0, 30);
 			VitalInitial = new TimeSpan(0, 5, 0);
-			VitalPeriod = new TimeSpan(0, 65, 0);
+			VitalPeriod = new TimeSpan(0, 70, 0);
 #endif
 			VitalEnabled = false;
 			CoreLength = new TimeSpan(3, 15, 0);

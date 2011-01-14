@@ -127,7 +127,7 @@ namespace Polyriser {
 				if(_trials >= 3)
 					goto PassedTest;
 				MakePrompt();
-				break;
+				return;
 
 			case TestMethod.VitalTest:
 				if(!CheckPrompt())
@@ -137,14 +137,10 @@ namespace Polyriser {
 				_engine.RaiseEvent(EngineEvent.VitalConfirmed);
 				_okToClose = true;
 				Close();
-				break;
-
-			default:
-				App.Assert(false);
-				break;
+				return;
 			}
 
-			return;
+			App.Assert(false);
 
 		FailedTest:
 			ScrewedUp();
@@ -152,9 +148,6 @@ namespace Polyriser {
 
 		PassedTest:
 			PassedTest();
-			return;
-
-		Continue:
 			return;
 		}
 
