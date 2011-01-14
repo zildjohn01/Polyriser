@@ -71,7 +71,7 @@
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "TestForm";
-			this.Text = "TestForm";
+			this.Text = "Before you leave";
 			this.TopMost = true;
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TestForm_FormClosing);
 			this.ResumeLayout(false);
