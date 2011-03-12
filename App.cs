@@ -87,7 +87,7 @@ namespace Polyriser {
 		public static string TimeToStringHHMMSS(TimeSpan time) {
 			if(time.Hours > 0)
 				return string.Format("{0}:{1:D2}:{2:00.##}",
-					time.Hours, time.Minutes, time.TotalSeconds - time.Minutes * 60);
+					time.Hours, time.Minutes, time.TotalSeconds - time.Hours * 3600 - time.Minutes * 60);
 			return string.Format("{0}:{1:00.##}",
 				time.Minutes, time.TotalSeconds - time.Minutes * 60);
 		}
